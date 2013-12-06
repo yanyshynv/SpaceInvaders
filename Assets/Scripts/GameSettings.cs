@@ -39,7 +39,7 @@ public class GameSettings : MonoBehaviour {
 	
 	}
 
-	void OnGUI(){
+	/*void OnGUI(){
 		if (in_game) {
 			GUI.skin.label.fontSize = FONT_Size;
 			GUI.Label (new Rect (H_space, V_space, BUT_width, BUT_height), "Points: " + points);
@@ -64,7 +64,7 @@ public class GameSettings : MonoBehaviour {
 			}
 		}
 
-	}
+	}*/
 
 	public void NewGame(){
 		in_end = false;
@@ -113,7 +113,7 @@ public class GameSettings : MonoBehaviour {
 	}
 
 	void ButtNewGame() {
-		Application.LoadLevel("Game");
+		Application.LoadLevel("Space");
 		in_game = true;
 	}
 	
