@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour {
 		if (GameSettings.change_algoritm){
 			algoritm_num++;
 			if(algoritm_num>3){algoritm_num=1;}
+			in_position = false;
+			in_position2 = true;
 		}
 		switch (algoritm_num) {
 				case 1:

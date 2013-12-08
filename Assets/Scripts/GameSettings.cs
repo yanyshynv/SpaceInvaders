@@ -85,9 +85,6 @@ public class GameSettings : MonoBehaviour {
 			in_pause=false;
 			Time.timeScale=1;
 		} 
-		else {
-			in_game=true;
-		}
 		Application.LoadLevel("Space");
 		points=0;
 		health=100;

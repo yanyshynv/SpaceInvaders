@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	public AudioClip fire;
 
 	void Start(){
+		GameSettings.in_game=true;
 		GameSettings.main_menu = GameObject.Find ("Main_panel");
 		NGUITools.SetActive(GameSettings.main_menu,false);
 		GenerateEnemy ();
