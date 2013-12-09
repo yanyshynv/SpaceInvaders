@@ -60,12 +60,15 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Laser(){
-		GameObject bullet = Instantiate(Resources.Load("Laser"))as GameObject;
-		bullet.transform.position = transform.position;
-		Laser bt = bullet.GetComponent<Laser>();
-		bt.enemy_tag = "Player";
-		bt.speed=-fire_speed;
-		AudioSource.PlayClipAtPoint(fire,transform.position,0.6f);
+		GameObject pl = GameObject.Find("Player");
+		if(pl!=null){
+			GameObject bullet = Instantiate(Resources.Load("Laser"))as GameObject;
+			bullet.transform.position = transform.position;
+			Laser bt = bullet.GetComponent<Laser>();
+			bt.enemy_tag = "Player";
+			bt.speed=-fire_speed;
+			AudioSource.PlayClipAtPoint(fire,transform.position,0.6f);
+		}
 	}
 
 	void MovementAlgoritm1(){

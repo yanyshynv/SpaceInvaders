@@ -44,6 +44,21 @@ public class Laser : MonoBehaviour {
 				AudioSource.PlayClipAtPoint(boom1,transform.position);
 			}
 		}
+		EnemyBomb enb = target.gameObject.GetComponent<EnemyBomb> ();
+		if (enb != null) {
+			enb.health-=power;
+			if(enb.health<=0){
+				AudioSource.PlayClipAtPoint(boom2,transform.position);
+				Destroy (target.gameObject);
+				GameSettings.health+=5;
+				GameSettings.enemies--;
+				GameSettings.points+=50;
+				if(GameSettings.health>100){GameSettings.health=100;}
+			}
+			else{
+				AudioSource.PlayClipAtPoint(boom1,transform.position);
+			}
+		}
 		Player pl = target.gameObject.GetComponent<Player> ();
 		if (pl != null) {
 			GameSettings.health-=power;
