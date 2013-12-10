@@ -14,7 +14,7 @@ public class EnemyBomb : MonoBehaviour {
 	public AudioClip flying;
 	
 	void Start(){
-		fire_frequency = Random.Range (1f, 4f);
+		fire_frequency = Random.Range (2f, 4f);
 		StartCoroutine(FireLaser());
 		AudioSource.PlayClipAtPoint(flying,transform.position,0.6f);
 		//start_point=new Vector3(Random.Range(-9, 9)*10, 5, Random.Range(5, 15)*10);
@@ -33,7 +33,7 @@ public class EnemyBomb : MonoBehaviour {
 			for (float timer = 0; timer < fire_frequency; timer += Time.deltaTime)
 				yield return 0;
 			Laser();
-			fire_frequency = Random.Range (1f, 4f);
+			fire_frequency = Random.Range (2f, 4f);
 		}
 	}
 	

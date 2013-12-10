@@ -36,7 +36,7 @@ public class Laser : MonoBehaviour {
 				Destroy (target.gameObject);
 				GameSettings.health++;
 				GameSettings.enemies--;
-				if(GameSettings.enemy_gen_frequency>2f){GameSettings.enemy_gen_frequency-=0.1f;}
+				if(GameSettings.enemy_gen_frequency>2f){GameSettings.enemy_gen_frequency-=0.08f;}
 				GameSettings.points+=10;
 				if(GameSettings.health>100){GameSettings.health=100;}
 			}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 	public Transform Camera;
-	public float speed=60;
+	public float speed=70;
 	public float gen_frequency;
 	private int enemy_algoritm=1;
 	public AudioClip fire;
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 
 	IEnumerator GenEnemyBomb()	{
 		while (true){
-			for (float timer = 0; timer < gen_frequency*1.6f; timer += Time.deltaTime)
+			for (float timer = 0; timer < gen_frequency*2.3f; timer += Time.deltaTime)
 				yield return 0;
 			if(GameSettings.enemies<28){GenerateEnemyBomb();}
 		}
