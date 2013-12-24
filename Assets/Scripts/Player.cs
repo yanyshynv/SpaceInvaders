@@ -92,13 +92,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void GenerateEnemyBomb(){
-		Vector3 start_point = new Vector3(Random.Range(-9, 9)*10, 5, 160);
-		Vector3 end_point= new Vector3(Random.Range(-9, 9)*10, 5, Random.Range(5, 13)*10);
-	
 		GameObject enemy = Instantiate(Resources.Load("EnemyBomb"))as GameObject;
-		enemy.transform.position=start_point;
-		EnemyBomb en = enemy.GetComponent<EnemyBomb> ();
-		en.start_point = end_point;
 		GameSettings.enemies++;
 	}
 }

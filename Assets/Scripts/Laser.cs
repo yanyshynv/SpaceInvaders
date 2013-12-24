@@ -9,6 +9,7 @@ public class Laser : MonoBehaviour {
 	public AudioClip boom2;
 	public AudioClip empire;
 	public string enemy_tag = "Enemy";
+
 	void Update () {
 		transform.position=new Vector3 (transform.position.x,transform.position.y,transform.position.z+speed*Time.deltaTime);
 		StartCoroutine(SelfDestroy());
@@ -30,8 +31,8 @@ public class Laser : MonoBehaviour {
 	void giveDamage(GameObject target){
 		Enemy en = target.gameObject.GetComponent<Enemy> ();
 		if (en != null) {
-			en.health-=power;
-			if(en.health<=0){
+			en.ship_health-=power;
+			if(en.ship_health<=0){
 				AudioSource.PlayClipAtPoint(boom2,transform.position);
 				Destroy (target.gameObject);
 				GameSettings.health++;
@@ -46,8 +47,8 @@ public class Laser : MonoBehaviour {
 		}
 		EnemyBomb enb = target.gameObject.GetComponent<EnemyBomb> ();
 		if (enb != null) {
-			enb.health-=power;
-			if(enb.health<=0){
+			enb.ship_health-=power;
+			if(enb.ship_health<=0){
 				AudioSource.PlayClipAtPoint(boom2,transform.position);
 				Destroy (target.gameObject);
 				GameSettings.health+=5;
