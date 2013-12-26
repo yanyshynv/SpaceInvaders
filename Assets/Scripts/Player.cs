@@ -4,41 +4,21 @@ using System.Collections;
 public class Player : MonoBehaviour {
 	public Transform Camera;
 	public float speed=70;
-	public float gen_frequency;
-	private int enemy_algoritm=1;
+
 	public AudioClip fire;
+	public AudioClip boom1;
+	public AudioClip empire;
+
 	private float mouse_position;
 
 	void Start(){
 		mouse_position=Input.mousePosition.x;
-		GameSettings.in_game=true;
-		GameSettings.main_menu = GameObject.Find ("Main_panel");
-		NGUITools.SetActive(GameSettings.main_menu,false);
-		GenerateEnemy ();
-		StartCoroutine(GenEnemy());
-		StartCoroutine(GenEnemyBomb());
 	}
 
 	void Update () {
-		gen_frequency = GameSettings.enemy_gen_frequency;
 		if (!GameSettings.in_pause) {
 			moveToMousePosition ();
-		}
-		if (Input.GetButtonDown ("Fire1") || Input.GetKeyDown (KeyCode.Space)) {
-			GameObject bullet = Instantiate(Resources.Load("LaserRed"))as GameObject;
-			bullet.transform.position = transform.position;
-			AudioSource.PlayClipAtPoint(fire,transform.position);
-		}
-		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
-			if (transform.position.x>-95) {
-				transform.position-=new Vector3(speed*Time.deltaTime,0f,0f);
-			}
-		}
-
-		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
-			if (transform.position.x<95) {
-				transform.position+=new Vector3(speed*Time.deltaTime,0f,0f);
-			}
+			PlayerKeyController();
 		}
 	}
 
@@ -52,47 +32,45 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	IEnumerator GenEnemy()	{
-		while (true){
-			for (float timer = 0; timer < gen_frequency; timer += Time.deltaTime)
-				yield return 0;
-			if(GameSettings.enemies<28){GenerateEnemy();}
+	void PlayerKeyController(){
+		if (Input.GetButtonDown ("Fire1") || Input.GetKeyDown (KeyCode.Space)) {
+			PlayerFire();
 		}
-	}
-
-	IEnumerator GenEnemyBomb()	{
-		while (true){
-			for (float timer = 0; timer < gen_frequency*2.3f; timer += Time.deltaTime)
-				yield return 0;
-			if(GameSettings.enemies<28){GenerateEnemyBomb();}
-		}
-	}
-
-	void GenerateEnemy(){
-		Vector3 start_point = new Vector3(Random.Range(-9, 9)*10, 5, 160);
-		Vector3 end_point= new Vector3(Random.Range(-8, 8)*10, 5, Random.Range(5, 13)*10);
-
-		for (var i=1; i<=4; i++) {
-			GameObject enemy = Instantiate(Resources.Load("Enemy"))as GameObject;
-			Enemy en = enemy.GetComponent<Enemy> ();
-			en.num_in_group = i;
-			en.algoritm_num = enemy_algoritm;
-			switch(en.num_in_group){
-			case 1: enemy.transform.position=new Vector3(start_point.x+10, 5, start_point.z+10); break;
-			case 2: enemy.transform.position=new Vector3(start_point.x+10, 5, start_point.z-10); break;
-			case 3: enemy.transform.position=new Vector3(start_point.x-10, 5, start_point.z-10); break;
-			case 4: enemy.transform.position=new Vector3(start_point.x-10, 5, start_point.z+10); break;
-			default: enemy.transform.position=start_point; break;
+		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
+			if (transform.position.x>-95) {
+				transform.position-=new Vector3(speed*Time.deltaTime,0f,0f);
 			}
-			en.start_point = end_point;
-			GameSettings.enemies++;
 		}
-
-		enemy_algoritm=Mathf.RoundToInt(Random.Range(0.6f,3.4f));
+		
+		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
+			if (transform.position.x<95) {
+				transform.position+=new Vector3(speed*Time.deltaTime,0f,0f);
+			}
+		}
 	}
 
-	void GenerateEnemyBomb(){
-		GameObject enemy = Instantiate(Resources.Load("EnemyBomb"))as GameObject;
-		GameSettings.enemies++;
+	void PlayerFire () {
+		GameObject bullet = Instantiate(Resources.Load("LaserRed"))as GameObject;
+		bullet.transform.position = transform.position;
+		AudioSource.PlayClipAtPoint(fire,transform.position);
+	}
+
+	public int GiveDamageToPlayer(int h){
+		
+		GameSettings.health-=h;
+		
+		if(GameSettings.health<0){
+			GameSettings.health=0;
+			DestroyPlayer();
+		}else{
+			AudioSource.PlayClipAtPoint(boom1,transform.position);
+		}
+		return GameSettings.health;
+	}
+	
+	public void DestroyPlayer(){
+		AudioSource.PlayClipAtPoint(empire,transform.position);
+		GameSettings.u_r_dead=true;
+		Destroy (gameObject);
 	}
 }

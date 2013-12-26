@@ -2,16 +2,21 @@
 using System.Collections;
 
 public class Resize : MonoBehaviour {
-	float time = 1;
-	float x;
-	float z;
+
+	private float time = 1;
+	private float x;
+	private float z;
+
 	public GameObject mm;
+
 	void Start(){
+		//Початкові розміри
 		x = transform.localScale.x;
 		z = transform.localScale.z;
 		NGUITools.SetActive (mm, false);
 	}
 	void Update(){
+		//Зміна розмірів
 		if (time < 10){
 			transform.localScale=new Vector3(x/time,1,z/time);
 			time += 2 * Time.deltaTime;
